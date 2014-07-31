@@ -130,10 +130,30 @@ Starting of the topic and attaching a listener have been added to the
 `immutant.init` namespace.
 
 
+# Step 6 - Messaging taken to the next level
+
+Now we want to combine the web and messaging components.
+
+    (ns immutant-meetup.core)
+    (require '[immutant.messaging :as msg])
+
+Evaluate this function:
+
+    (defn publish-my-topic
+      [text]
+      (msg/publish "topic/println" text)
+      (str "<h1>Topic</h1><br>Published: " text))
+
+And re-evaluate `app` to include a new route:
+
+    (GET "/topic/:text" [text] (publish-my-topic text))
+
+Now access the URL: http://localhost:8080/immutant-meetup/topic/sometext
+and watch the console for the text `sometext`.
+
+
 [1]: http://immutant.org/tutorials-1x/installation/index.html
 [2]: http://immutant.org/documentation/current/messaging.html#sec-2-3
-
-
 
 ## License
 
