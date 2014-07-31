@@ -1,10 +1,38 @@
 # immutant-meetup
 
+This repository will be the base for the talk at the next [Copenhangen Clojure Meetup][].
+
+As of this writing version 1.1.3 is the latest stable version.
+
+[Copenhangen Clojure Meetup]: http://www.meetup.com/Copenhagen-Clojure-Meetup/events/190043432/
+
+
+## Steps
+
+
+### Step 1
+
 This repo was created by:
 
     lein new immutant-meetup
 
-Nothing more... let's start!
+### Step 2 - Install Immutant
+
+Add the following to the ´~/.lein/profiles.clj´ file:
+
+    {:user {:plugins [[lein-immutant "1.2.1"]]}}
+
+Then install using `lein`:
+
+    lein immutant install
+
+This will install the latest stable version.
+
+More information about [installing][1] (including alternative ways) on
+the official website.
+
+[1]: http://immutant.org/tutorials-1x/installation/index.html
+
 
 ## License
 
