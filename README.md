@@ -70,6 +70,37 @@ To stop a running Immutant instance press `Ctrl - c`.
 When Immutant is restarted all applications are (re-)deployed.
 
 
+## Step 4 - nREPL
+
+By default applications are deployed using a :dev profile which by
+default among other things display stacktraces in the console,
+auto reloads source files when they are saved and starts a nREPL.
+
+For the rest of this walkthrough auto reload have been disabled.
+Give web/start the options `:auto-reload? true` and re-deploy.
+Code will be evaluated (and re-evaluated) using the REPL.
+
+The REPL will start on a random port number and can be found by
+looking in the console in the output from the deployment, ie.:
+
+    nREPL bound to 127.0.0.1:33532
+
+To test it connect to it using:
+
+    lein repl :connect localhost:33532
+
+Now lets change something:
+
+    (ns immutant-meetup.core)
+    
+    (defroutes app
+               (GET "/" [] "<h1>Hello everybody</h1>")
+               (route/not-found "<h1>Page not found</h1>"))
+
+This is pretty neat compared to normal JBoss development, because of
+it's startup time :)
+
+
 [1]: http://immutant.org/tutorials-1x/installation/index.html
 
 
