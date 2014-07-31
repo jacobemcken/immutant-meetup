@@ -152,6 +152,33 @@ Now access the URL: http://localhost:8080/immutant-meetup/topic/sometext
 and watch the console for the text `sometext`.
 
 
+# Step 7 - Scheduling
+
+Lets start by adding a atom to hold the number of updates done by our scheduled job
+
+    (ns immutant-meetup.core)
+    (def updates (atom 0))
+
+Then we modify our route for the application root, remember to re-evaluate `app` to update route:
+
+    (GET "/" [] (str "<h1>Hello World</h1><br>Updated: " @updates " times"))
+
+Now lets setup a scheduled job, to actually count up our atom.
+Using scheduling requires the `immutant.jobs` namespace.
+
+    (ns immutant.init)
+    (require '[immutant.jobs :as jobs])
+
+To schedule a job:
+
+    (jobs/schedule "update-counter"
+                   #(swap! updates inc)
+                   "*/10 * * * * ?")
+
+Now access the URL: http://localhost:8080/immutant-meetup/ and watch the update change
+every 5 minute on reloads.
+
+
 [1]: http://immutant.org/tutorials-1x/installation/index.html
 [2]: http://immutant.org/documentation/current/messaging.html#sec-2-3
 
