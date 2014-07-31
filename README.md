@@ -101,7 +101,38 @@ This is pretty neat compared to normal JBoss development, because of
 it's startup time :)
 
 
+# Step 5 - Messaging
+
+Using messaging requires the `immutant.messaging` namespace.
+
+    (ns immutant.init)
+    (require '[immutant.messaging :as msg])
+
+Start it using:
+
+    (msg/start "topic/println")
+
+`start` can take a number of different [options][2].
+
+Attach listener using:
+
+    (msg/listen "topic/println" #(println %))
+
+Now send somthing to the "topic":
+
+    (msg/publish "topic/println" "Hello everybody!")
+
+To attach another listener to the topic:
+
+    (msg/listen "topic/println"  #(println (str "2: " %)))
+
+Starting of the topic and attaching a listener have been added to the
+`immutant.init` namespace.
+
+
 [1]: http://immutant.org/tutorials-1x/installation/index.html
+[2]: http://immutant.org/documentation/current/messaging.html#sec-2-3
+
 
 
 ## License
