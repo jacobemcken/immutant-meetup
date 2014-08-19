@@ -2,21 +2,20 @@
 
 This repository will be the base for the talk at the next [Copenhangen Clojure Meetup][].
 
-As of this writing version 1.1.3 is the latest stable version.
+At the time of writing Immutant version 1.1.3 is the latest stable version.
 
 [Copenhangen Clojure Meetup]: http://www.meetup.com/Copenhagen-Clojure-Meetup/events/190043432/
 
 
-## Steps
+# Steps
 
-
-### Step 1
+## Step 1
 
 This repo was created by:
 
     lein new immutant-meetup
 
-### Step 2 - Install Immutant
+## Step 2 - Install Immutant
 
 Add the following to the ´~/.lein/profiles.clj´ file:
 
@@ -101,7 +100,7 @@ This is pretty neat compared to normal JBoss development, because of
 it's startup time :)
 
 
-# Step 5 - Messaging
+## Step 5 - Messaging
 
 Using messaging requires the `immutant.messaging` namespace.
 
@@ -130,7 +129,7 @@ Starting of the topic and attaching a listener have been added to the
 `immutant.init` namespace.
 
 
-# Step 6 - Messaging taken to the next level
+## Step 6 - Messaging taken to the next level
 
 Now we want to combine the web and messaging components.
 
@@ -152,7 +151,7 @@ Now access the URL: http://localhost:8080/immutant-meetup/topic/sometext
 and watch the console for the text `sometext`.
 
 
-# Step 7 - Scheduling
+## Step 7 - Scheduling
 
 Lets start by adding a atom to hold the number of updates done by our scheduled job
 
