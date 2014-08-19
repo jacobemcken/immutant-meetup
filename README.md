@@ -179,6 +179,33 @@ Now access the URL: http://localhost:8080/immutant-meetup/ and watch the update 
 every 5 minute on reloads.
 
 
+## Step 8 - Deployment with archives
+
+First create an Immutant archive of the application
+
+    lein immutant archive
+
+Then deploy it on the Immutant server
+
+    cp immutant-meetup.ima ~/.immutant/current/jboss/standalone/deployments/
+    touch ~/.immutant/current/jboss/standalone/deployments/immutant-meetup.ima.dodeploy
+
+
+## Step 9 - Deployment descriptors
+
+For better control of the deployment, use deployment descriptors. Create a deployment descriptor named my-descriptor.clj containing a map with options.
+
+    {:root "~/immutant-meetup.ima"
+     :context-path "/demo"
+     :nrepl-port 12345
+     :custom-key "test"}
+
+To deploy an archive through a deployment descriptor
+
+    cp my-descriptor.clj ~/.immutant/current/jboss/standalone/deployments/
+    touch ~/.immutant/current/jboss/standalone/deployments/my-descriptor.clj.dodeploy
+
+
 [1]: http://immutant.org/tutorials-1x/installation/index.html
 [2]: http://immutant.org/documentation/current/messaging.html#sec-2-3
 
