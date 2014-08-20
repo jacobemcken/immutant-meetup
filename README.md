@@ -211,7 +211,7 @@ Then deploy it on the Immutant server
     touch ~/.immutant/current/jboss/standalone/deployments/immutant-meetup.ima.dodeploy
 
 
-## Step 9 - Deployment descriptors
+## Step 10 - Deployment descriptors
 
 For better control of the deployment, use deployment descriptors. Create a deployment descriptor named my-descriptor.clj containing a map with options.
 
