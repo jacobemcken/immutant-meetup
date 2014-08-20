@@ -16,6 +16,13 @@ This repo was created by:
 
     lein new immutant-meetup
 
+Include compojure in the project.clj files dependencies:
+
+    [compojure "1.1.8"]
+
+Compojure well be used later in this tutorial.
+
+
 ## Step 2 - Install Immutant
 
 Add the following to the ´~/.lein/profiles.clj´ file:
@@ -32,15 +39,7 @@ More information about [installing][1] (including alternative ways) on
 the official website.
 
 
-## Step 3 - Spin it up... but first
-
-Immutant is now ready to start but let's give it something to show off
-before we move on. A good place to start is with the web component.
-
-For that it needs a handler for the app context, and even though
-Immutant supports using `:ring` (from lein-ring) in `project.clj`, the
-`immutant.init` namespace will be used to prepare the way for
-initializing other stuff than just a web handler.
+## Step 3 - Spin it up
 
 Start Immutant using:
 
@@ -61,8 +60,6 @@ On the console Immutant will tell us:
 and after a short while:
 
     Deployed "immutant-meetup.clj"
-
-Now we can access the application on http://localhost:8080/immutant-meetup/
 
 The order in which `run`/`deploy` is executed is irreleveant.
 
@@ -89,19 +86,41 @@ To test it connect to it using:
 
     lein repl :connect localhost:33532
 
-Now lets change something:
+This is pretty neat compared to normal JBoss development, because it
+is easy to change and re-evaluate code with out redeploy.
+
+
+## Step 5 - Web
+
+Immutant is now up and running and available via a nREPL but let's
+give it something to show off. For this the Web component is an
+excellent place to start.
+
+Define a ring handler. This example uses `immutant-meetup.core` as
+placeholder:
 
     (ns immutant-meetup.core)
+    (use 'compojure.core)
+    (require '[compojure.route :as route])
     
     (defroutes app
-               (GET "/" [] "<h1>Hello everybody</h1>")
-               (route/not-found "<h1>Page not found</h1>"))
+      (GET "/" [] "<h1>Hello World</h1>")
+      (route/not-found "<h1>Page not found</h1>"))
 
-This is pretty neat compared to normal JBoss development, because of
-it's startup time :)
+Immutant supports using `:ring` (from lein-ring) in `project.clj`, to
+setup a web handler but the `immutant.init` namespace is better suited
+to initialize all round applications specific things.
+
+    (ns immutant.init)
+    (use 'immutant-meetup.core)
+    (require '[immutant.web :as web])
+    
+    (web/start app)
+
+Now we can access the application on http://localhost:8080/immutant-meetup/
 
 
-## Step 5 - Messaging
+## Step 6 - Messaging
 
 Using messaging requires the `immutant.messaging` namespace.
 
@@ -130,7 +149,7 @@ Starting of the topic and attaching a listener have been added to the
 `immutant.init` namespace.
 
 
-## Step 6 - Messaging taken to the next level
+## Step 7 - Messaging taken to the next level
 
 Now we want to combine the web and messaging components.
 
@@ -152,7 +171,7 @@ Now access the URL: http://localhost:8080/immutant-meetup/topic/sometext
 and watch the console for the text `sometext`.
 
 
-## Step 7 - Scheduling
+## Step 8 - Scheduling
 
 Lets start by adding a atom to hold the number of updates done by our scheduled job
 
@@ -167,6 +186,7 @@ Now lets setup a scheduled job, to actually count up our atom.
 Using scheduling requires the `immutant.jobs` namespace.
 
     (ns immutant.init)
+    (use 'immutant-meetup.core) ; need to reload to see "updates" atom
     (require '[immutant.jobs :as jobs])
 
 To schedule a job:
@@ -179,7 +199,7 @@ Now access the URL: http://localhost:8080/immutant-meetup/ and watch the update 
 every 5 minute on reloads.
 
 
-## Step 8 - Deployment with archives
+## Step 9 - Deployment with archives
 
 First create an Immutant archive of the application
 
